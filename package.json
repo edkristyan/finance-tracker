@@ -1,0 +1,25 @@
+{
+  "name": "finance-tracker",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Offline-first personal finance tracker (IndexedDB, client-only, deployed as a static PWA).",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint js --ext .js",
+    "lint:fix": "eslint js --ext .js --fix",
+    "format": "prettier --write \"js/**/*.js\" \"css/**/*.css\" \"*.html\"",
+    "format:check": "prettier --check \"js/**/*.js\" \"css/**/*.css\" \"*.html\"",
+    "audit": "npm audit --audit-level=moderate",
+    "security": "npm run audit && npm run lint",
+    "test:loans-goals-reports": "node scripts/verify-loans-goals-reports.mjs"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-plugin-security": "^3.0.1",
+    "prettier": "^3.3.3",
+    "vite": "^5.4.0"
+  }
+}

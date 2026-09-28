@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ledger — Personal Finance (Offline)</title>
+    <link rel="manifest" href="./manifest.json" />
+    <meta name="theme-color" content="#8458B3" />
+    <link rel="icon" href="./icons/icon-192.png" />
+    <link rel="stylesheet" href="./css/tokens.css" />
+    <link rel="stylesheet" href="./css/layout.css" />
+    <link rel="stylesheet" href="./css/components.css" />
+    <link rel="stylesheet" href="./css/views.css" />
+  </head>
+  <body>
+    <div id="app">
+      <aside class="sidebar">
+        <div class="brand"><span class="mark">₱</span><span class="name">Ledger</span></div>
+        <!-- Grouped and ordered by how often each tab tends to get used:
+             Dashboard first (checked on every visit), then the day-to-day
+             money tabs (logged into most often), then the lower-frequency
+             planning tabs, then Reports last (an occasional look-back). -->
+        <nav class="tabs" id="nav">
+          <div class="nav-group-label">Overview</div>
+          <button data-view="dashboard" class="active">Dashboard</button>
+
+          <div class="nav-group-label">Money</div>
+          <button data-view="transactions">Transactions</button>
+          <button data-view="accounts">Accounts</button>
+          <button data-view="investments">Investments</button>
+
+          <div class="nav-group-label">Planning</div>
+          <button data-view="loans">Loans</button>
+          <button data-view="goals">Goals</button>
+
+          <div class="nav-group-label">Insights</div>
+          <button data-view="reports">Reports</button>
+        </nav>
+        <div class="side-foot">
+          <button
+            id="theme-toggle-btn"
+            class="btn small secondary"
+            style="width: 157px; justify-content: center; margin-bottom: 8px"
+          >
+            🌙 Toggle theme
+          </button>
+          <button
+            id="privacy-toggle-btn"
+            class="btn small secondary"
+            style="width: 157px; justify-content: center; margin-bottom: 10px"
+            disabled
+          >
+            🙉 Hide amounts
+          </button>
+          <div style="padding: 0 10px">
+            Runs fully offline. Your data is stored only in this browser, on this computer — back
+            it up from Accounts → Export.
+          </div>
+        </div>
+      </aside>
+      <main id="main">
+        <div class="empty">Loading your ledger…</div>
+      </main>
+    </div>
+    <script type="module" src="./js/main.js"></script>
+  </body>
+</html>

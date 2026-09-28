@@ -1,0 +1,553 @@
+/**
+ * Reusable primitives shared across views. Views land in later phases, but
+ * these are ported now so every future view/component draws from one
+ * canonical set of button/input/modal styles instead of re-deriving them.
+ */
+
+select,
+input:not([type='checkbox']):not([type='radio']),
+textarea {
+  font-family: inherit;
+  font-size: 14px;
+  background: var(--surface-2);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 10px 14px;
+  transition: border-color 0.12s ease;
+}
+
+select:focus,
+input:focus,
+textarea:focus {
+  outline: 2px solid var(--gold);
+  outline-offset: 1px;
+  border-color: var(--gold);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--ink-soft);
+  opacity: 0.85;
+}
+
+.btn {
+  all: unset;
+  cursor: pointer;
+  font-size: 13.5px;
+  font-weight: 500;
+  padding: 8px 14px;
+  border-radius: 7px;
+  background: var(--ink);
+  color: var(--paper);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition:
+    opacity 0.12s ease,
+    transform 0.1s ease;
+}
+
+.btn:hover {
+  opacity: 0.88;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn.secondary {
+  background: var(--surface-2);
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+
+.btn.small {
+  padding: 5px 10px;
+  font-size: 12.5px;
+}
+
+.btn.danger {
+  background: var(--rust-soft);
+  color: var(--rust);
+}
+
+.btn.accent {
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+}
+
+.btn.accent:hover {
+  background: var(--gold-soft);
+  opacity: 1;
+}
+
+.btn.info {
+  background: transparent;
+  color: var(--info);
+  border: 1px solid var(--info);
+}
+
+.btn.info:hover {
+  background: var(--info-soft);
+  opacity: 1;
+}
+
+.btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+kbd {
+  font-family: var(--font-mono);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 1px 5px;
+}
+
+/* Progressive disclosure: compact by default, one click to see the rest.
+   Wired up once a view actually has a long list to collapse (Phase 3+). */
+.disclosure-toggle {
+  all: unset;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--gold);
+  padding: 6px 2px 0;
+  display: inline-block;
+}
+
+.disclosure-toggle:hover {
+  text-decoration: underline;
+}
+
+/* Command palette (Ctrl+K / Cmd+K) shell. Open/close behavior and the
+   command list itself are wired up in js/components/commandPalette.js
+   (Phase 3) — this is layout/visual only. */
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes overlayIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 25, 20, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 20px;
+  animation: overlayIn 0.15s ease;
+}
+
+.modal-box {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 22px 24px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.28);
+  max-height: 88vh;
+  overflow-y: auto;
+  animation: modalIn 0.16s ease;
+}
+
+.modal-box h3 {
+  font-size: 16px;
+  margin-bottom: 14px;
+}
+
+.modal-box .field {
+  margin-bottom: 12px;
+  width: 100%;
+}
+
+.modal-box .field input,
+.modal-box .field select,
+.modal-box .field textarea {
+  width: 100%;
+}
+
+.modal-box .field input[type='checkbox'] {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.field label {
+  font-size: 12px;
+  color: var(--gold);
+  font-weight: 500;
+}
+
+.icon-btn {
+  all: unset;
+  cursor: pointer;
+  color: var(--ink-soft);
+  padding: 5px 7px;
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 1;
+  transition:
+    background 0.12s ease,
+    color 0.12s ease,
+    transform 0.1s ease;
+}
+
+.icon-btn:hover {
+  background: var(--surface-2);
+  color: var(--gold);
+  transform: translateY(-1px);
+}
+
+.icon-btn:active {
+  transform: translateY(0);
+}
+
+.icon-btn.danger-hover:hover {
+  color: var(--rust);
+}
+
+.muted {
+  color: var(--ink-soft);
+}
+
+.empty {
+  padding: 30px 10px;
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: 13px;
+}
+
+/* Cards, tables, tags, badges — generic primitives used by every view. */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  box-shadow: var(--shadow);
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+}
+
+th {
+  text-align: left;
+  font-weight: 600;
+  font-size: 11.5px;
+  color: var(--ink-soft);
+  border-bottom: 1px solid var(--line);
+  padding: 8px 10px;
+}
+
+td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+
+tbody tr:hover {
+  background: var(--surface-2);
+}
+
+.num {
+  text-align: right;
+  font-family: var(--font-mono);
+}
+
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 11.5px;
+  background: var(--surface-2);
+  color: var(--ink-soft);
+}
+
+.pos {
+  color: var(--green);
+}
+
+.neg {
+  color: var(--rust);
+}
+
+.badge {
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  font-size: 12.5px;
+  font-family: inherit;
+  cursor: pointer;
+  color: var(--ink);
+  transition: border-color 0.12s ease;
+}
+
+.badge:hover {
+  border-color: var(--gold);
+}
+
+.form-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+}
+
+.form-row .field select,
+.form-row .field input {
+  min-width: 120px;
+}
+
+.section-title {
+  font-size: 15px;
+  margin: 26px 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.section-title .rule {
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+.kpi .label {
+  font-size: 12px;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+}
+
+.kpi .value {
+  font-family: var(--font-mono);
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.kpi .value.pos {
+  color: var(--green);
+}
+
+.kpi .value.neg {
+  color: var(--rust);
+}
+
+/* Hero KPIs (Net worth, Liquid balance) — the two numbers worth reading
+   first, sized up and given their own row. 1 col phone, 2 col from tablet
+   up (never more than 2, so no separate desktop step is needed). */
+.kpi-hero-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 600px) {
+  .kpi-hero-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.kpi.hero .label {
+  font-size: 12.5px;
+}
+
+.kpi.hero .value {
+  font-size: 30px;
+}
+
+/* Secondary KPIs (Investments+MP2, Credit owed, Dividends earned, Loans
+   outstanding) — demoted to small inline chips rather than full-size cards,
+   since they matter less than the two hero numbers above. */
+.kpi-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.kpi-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 8px 14px;
+  box-shadow: var(--shadow);
+}
+
+.kpi-chip .chip-label {
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.kpi-chip .chip-value {
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.kpi-chip .chip-value.pos {
+  color: var(--green);
+}
+
+.kpi-chip .chip-value.neg {
+  color: var(--rust);
+}
+
+.fund-card {
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    transform 0.15s ease;
+}
+
+.fund-card:hover {
+  border-color: var(--gold);
+  box-shadow: 0 4px 14px rgba(27, 43, 34, 0.1);
+  transform: translateY(-2px);
+}
+
+.tag.buy {
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.tag.sell {
+  background: var(--rust-soft);
+  color: var(--rust);
+}
+
+.tag.dividend {
+  background: var(--gold-soft);
+  color: var(--gold);
+}
+
+.tag.fee {
+  background: var(--surface-2);
+  color: var(--ink-soft);
+}
+
+.tag.expense {
+  background: var(--rust-soft);
+  color: var(--rust);
+}
+
+.tag.income,
+.tag.received {
+  background: var(--green-soft);
+  color: var(--green);
+}
+
+.tag.transfer,
+.tag.savings {
+  background: var(--info-soft);
+  color: var(--info);
+}
+
+.tag.investments {
+  background: var(--gold-soft);
+  color: var(--gold);
+}
+
+/* Bento-box card grids for the Dashboard.
+   The 6 plain stat cards that used to live in a 6-up .kpi-grid are now
+   split into .kpi-hero-row (Net worth, Liquid balance) and .kpi-chip-row
+   (the other 4), defined above alongside their own rules.
+   .bento-grid is for the richer cards (Account balances, Liquidity, and any
+   more added later): 2 to 4 columns depending on width, 1 on phone.
+   Explicit column counts per breakpoint (rather than auto-fit/minmax) so
+   the exact column count at each size is deliberate, not approximate. */
+.bento-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 600px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .bento-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .bento-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* .duo-grid: every 2-card dashboard row (Account balances / This month's
+   routines; Income vs expense / Where it went; Liquid vs. illiquid / Cash
+   flow forecast) — 1 col phone, 2 col from tablet width up through desktop
+   (never more than 2, so no separate desktop step is needed). align-items
+   left at the grid default (stretch) so both cards in a row match the
+   taller one's height rather than each hugging its own content and
+   leaving a ragged bottom edge. (There used to be a 4-across .quad-grid
+   for the first row too; it's gone now that row is two stacked .duo-grid
+   rows instead.) */
+.duo-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  align-items: stretch;
+}
+
+@media (min-width: 600px) {
+  .duo-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.clickable-row {
+  cursor: pointer;
+  transition:
+    background 0.12s ease,
+    padding-left 0.12s ease;
+}
+
+.clickable-row:hover {
+  background: var(--surface-2);
+}

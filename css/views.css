@@ -1,0 +1,12 @@
+/**
+ * Per-view layout rules (Dashboard KPI grid, Transactions table layout,
+ * Investments fund cards, Accounts list, etc.) land here as each view is
+ * built in later phases — kept out of components.css because these are
+ * page-specific arrangements, not reusable primitives.
+ */
+
+.view-stub {
+  padding: 40px 10px;
+  text-align: center;
+  color: var(--ink-soft);
+}
